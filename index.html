@@ -1,0 +1,23 @@
+<html>
+	<head></head>
+	<body>
+		<div id="target"></div>
+		<script src="script.js" type="module"></script>
+		<script type="module">
+			'use strict';
+			import * as classes from '/script.js'
+
+			const W = 500
+			const H = 300
+
+			let test = new classes.ReduceColors()
+			let i = test.canvas(document.getElementById("target"),W,H)
+			test.load(['mary-christmas.png'])
+			.then(function(e){
+				test.draw(i,e[0].img,W,H)
+				let pixels = test.getData(i,W,H)
+				console.log(pixels);
+			})
+		</script>
+	</body>
+</html>
