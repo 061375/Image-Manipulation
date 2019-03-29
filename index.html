@@ -1,21 +1,38 @@
 <html>
-	<head></head>
+	<head>
+		<style>
+			div {
+				float: left;
+			}
+		</style>
+	</head>
 	<body>
+		<div id="original"></div>
 		<div id="target"></div>
 		<script type="module">
 			'use strict';
 			import * as classes from '/script.js'
 
-			const W = 500
-			const H = 300
+			const W = 400
+			const H = 500
+			const N = 5 // nearest color threashold
 
 			let test = new classes.ReduceColors()
-			let i = test.canvas(document.getElementById("target"),W,H)
-			test.load(['mary-christmas.png'])
+			let i = test.canvas(document.getElementById("original"),W,H)
+			let j = test.canvas(document.getElementById("target"),W,H)
+			test.load(['redlands_trainstation.jpg'])
 			.then(function(e){
 				test.draw(i,e[0].img,W,H)
 				let pixels = test.getData(i,W,H)
-				console.log(pixels);
+				test.loopPixels(W,H,pixels,[{
+					f:test.nearestPixel,
+					params:{
+						i:j,
+						l:N,
+						ctx:test._ctx
+					}
+				}])
+				
 			})
 		</script>
 	</body>
