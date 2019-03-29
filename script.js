@@ -79,6 +79,13 @@ export class ImageData {
 		}   
 		return pixels;
 	}
+	/**
+	 * loops all the pixels of the image and calls functions to act on the image
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Array}
+	 * @param {Object}
+	 * * */
 	loopPixels(w,h,p,funcs) {
 		let x, y, f
 		for (y = 0; y<h;y++) {

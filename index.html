@@ -10,13 +10,15 @@
 		<div id="original"></div>
 		<div id="target"></div>
 		<script type="module">
+			
 			'use strict';
+			
 			import * as classes from '/script.js'
 
 			const W = 400
 			const H = 500
 			const N = 5 // nearest color threashold
-
+			
 			let test = new classes.ReduceColors()
 			let i = test.canvas(document.getElementById("original"),W,H)
 			let j = test.canvas(document.getElementById("target"),W,H)
@@ -34,6 +36,7 @@
 				}])
 				
 			})
+			
 		</script>
 	</body>
 </html>
