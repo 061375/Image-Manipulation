@@ -192,19 +192,6 @@ export class ReduceColors extends ImageData {
 			p.buffer[j+1] = max.c[1]
 			p.buffer[j+2] = max.c[2]
 	}
-	hack(p,pos,c) {
-		if(undefined !== p.buffer[pos] && undefined !== p.buffer[pos+1] && undefined !== p.buffer[pos+2]) {
-    		let q = p.buffer[pos] + p.buffer[pos+1] + p.buffer[pos+2]	
-    		if (c[q] === undefined) {
-				c[q] = {
-					c:[p.buffer[pos],p.buffer[pos+1],p.buffer[pos+2]],
-					i:1
-			    };
-			}else{
-			    c[q].i++;
-			}
-    	}
-	}
 }
 export class Colors {
 	/**

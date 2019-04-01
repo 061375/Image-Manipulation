@@ -22,7 +22,7 @@
 			let test = new classes.ReduceColors()
 			let i = test.canvas(document.getElementById("original"),W,H)
 			let j = test.canvas(document.getElementById("target"),W,H)
-			test.load(['redlands_trainstation.jpg'])
+			test.load(['cat.jpg'])
 			.then(function(e){
 				test.draw(i,e[0].img,W,H)
 				let pixels = test.getData(i,W,H)
