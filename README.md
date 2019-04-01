@@ -10,7 +10,7 @@ It counts colors of surrounding pixels and uses the most common.
 
 I plan to add reduce color and dithering soon.
 
-04/01/2019 - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40+ the old way.
+**04/01/2019** - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40MB+ the old way.
 
 ![alt text](https://raw.githubusercontent.com/061375/Image-Manipulation/master/impressionism-redlands-trainstation.jpg "Nearest Pixel")
 
