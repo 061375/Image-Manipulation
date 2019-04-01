@@ -15,9 +15,9 @@
 			
 			import * as classes from '/script.js'
 
-			const W = 400
-			const H = 500
-			const N = 5 // nearest color threashold
+			const W = 300
+			const H = 400
+			const N = 10 // nearest color threashold
 			
 			let test = new classes.ReduceColors()
 			let i = test.canvas(document.getElementById("original"),W,H)
@@ -33,7 +33,9 @@
 						l:N,
 						ctx:test._ctx
 					}
-				}])
+				}]).then(function(p) {
+					test.drawBuffer(p,j)
+				})
 				
 			})
 			

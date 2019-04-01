@@ -66,18 +66,28 @@ export class ImageData {
 	getData(i,w,h) {
 		const imgd = this.ctx[i].getImageData(0,0,w,h)
 		const pix = imgd.data
+		const buffer = imgd.data.buffer
+		//console.log(buffer);
+		const sourceBuffer8     = new Uint8ClampedArray(buffer);
+		console.log(sourceBuffer8);
+		return {
+			buffer:sourceBuffer8,
+			imgdata:imgd
+		}
+		/*
 		let j, n, x = 0, y = 0, pixels = [[]]
 		// Loop over each pixel and set a transparent red.
 		for (j = 0; n = pix.length, j < n; j += 4) {
 		    pixels[y][x] = [pix[j],pix[j+1],pix[j+2],pix[j+3]];
 		    x++;
 		    if (x == w) {
-			x = 0;
-			y++;
-			pixels[y] = [];
+				x = 0;
+				y++;
+				pixels[y] = [];
 		    }
 		}   
 		return pixels;
+		*/
 	}
 	/**
 	 * loops all the pixels of the image and calls functions to act on the image
@@ -87,17 +97,43 @@ export class ImageData {
 	 * @param {Object}
 	 * * */
 	loopPixels(w,h,p,funcs) {
-		let x, y, f
-		for (y = 0; y<h;y++) {
-			for (x = 0; x<w;x++) {
-				for(f = 0; f<funcs.length;f++){
-					if (typeof funcs[f].f === 'function') {
-						
-						funcs[f].f(p,x,y,funcs[f].params)
+		let pr = new Promise((resolve, reject) => {
+			/*
+			let x, y, f
+			for (y = 0; y<h;y++) {
+				for (x = 0; x<w;x++) {
+					for(f = 0; f<funcs.length;f++){
+						if (typeof funcs[f].f === 'function') {
+							
+							funcs[f].f(p,x,y,funcs[f].params)
+						}
 					}
 				}
 			}
-		}
+			*/
+			let i = 0, j = 0, len = 0, x = 0, y = 0, f
+			for(i=0, j=0, len=p.buffer.length / 4; i!=len; i++, j+=4 ) {
+				//console.log(p.buffer[j],p.buffer[j+1],p.buffer[j+2],p.buffer[j+3]);
+				for(f = 0; f<funcs.length;f++){
+					if (typeof funcs[f].f === 'function') {
+						
+						funcs[f].f(p,w,h,j,funcs[f].params,this)
+					}
+				}
+				x++
+				if(x>=w) {
+					y++
+					x=0
+				}
+				//console.log(x,y);
+			}
+			resolve(p)
+		})
+		return pr
+	}
+	drawBuffer(p,i) {
+		console.log(p);
+		this.ctx[i].putImageData(p.imgdata, 0, 0);
 	}
 	get _ctx() {
 		return this.ctx
@@ -110,47 +146,64 @@ export class ReduceColors extends ImageData {
 		this.cids = 0
 		this.ctx = []
 	}
-	nearestPixel(p,x,y,params) {
-		let c = {},
+	nearestPixel(p,w,h,j,params,$t) {
+		var c = {},
 		    l = params.l,
 		    yy,
 		    xx,
-		    q;
-		for(yy=y-l;yy<y+l;yy++) {
-			for( xx=x-l;xx<x+l;xx++){
-				if (undefined !== p[yy]) {
-					if (undefined !== p[yy][xx]) {
-						q = p[yy][xx][0]+p[yy][xx][1]+p[yy][xx][2];
-						// increment a count of the color of this pixel
-						if (c[q] === undefined) {
-						    c[q] = {
-							c:p[yy][xx],
-							i:1
+		    xxx = 0,
+		    q,
+		    pos;
+		    w = w * 4
+		    for(yy=0;yy<l;yy++) {
+			    for(xx=0;xx<(l*2);xx+=4) {
+			    	pos = j + (w*yy) + xx
+			    	if(undefined !== p.buffer[pos] && undefined !== p.buffer[pos+1] && undefined !== p.buffer[pos+2]) {
+			    		q = p.buffer[pos] + p.buffer[pos+1] + p.buffer[pos+2]	
+			    		if (c[q] === undefined) {
+							c[q] = {
+								c:[p.buffer[pos],p.buffer[pos+1],p.buffer[pos+2]],
+								i:1
 						    };
 						}else{
 						    c[q].i++;
 						}
+			    	}
+			    	
+			    }
+			}
+			
+			// @param {Object}
+			let max = {
+			    i:0,
+			    c:[0,0,0]
+			}
+			// loop the colors to see which is the most common
+			for(let i in c) {
+			    if (c.hasOwnProperty(i)) {
+					// if this color was found more often than max then replace it
+					if(c[i].i > max.i) {
+					    max.i = c[i].i
+					    max.c = c[i].c;
 					}
-				}
+			    }
 			}
-		}
-		// @param {Object}
-		let max = {
-		    i:0,
-		    c:null
-		}
-		// loop the colors to see which is the most common
-		for(let i in c) {
-		    if (c.hasOwnProperty(i)) {
-			// if this color was found more often than max then replace it
-			if(c[i].i > max.i) {
-			    max.i = c[i].i
-			    max.c = c[i].c;
+			p.buffer[j] = max.c[0]
+			p.buffer[j+1] = max.c[1]
+			p.buffer[j+2] = max.c[2]
+	}
+	hack(p,pos,c) {
+		if(undefined !== p.buffer[pos] && undefined !== p.buffer[pos+1] && undefined !== p.buffer[pos+2]) {
+    		let q = p.buffer[pos] + p.buffer[pos+1] + p.buffer[pos+2]	
+    		if (c[q] === undefined) {
+				c[q] = {
+					c:[p.buffer[pos],p.buffer[pos+1],p.buffer[pos+2]],
+					i:1
+			    };
+			}else{
+			    c[q].i++;
 			}
-		    }
-		}
-		params.ctx[params.i].fillStyle=Colors.rgbToHex(max.c[0],max.c[1],max.c[2]);
-                params.ctx[params.i].fillRect(x,y,1,1);
+    	}
 	}
 }
 export class Colors {
@@ -180,12 +233,16 @@ export class Colors {
 	 * returns a random color
 	 * @returns {String}
 	 * */
-	static random() {
+	static random(hex = true) {
 		let c = [];
 		for(let i=0; i<3;i++) {
 		  c.push(~~(Math.random() * 255));
 		}
-		return this.rgbToHex(c[0],c[1],c[2]);
+		if(hex) {
+			return this.rgbToHex(c[0],c[1],c[2])
+		}else{
+			return c
+		}
 	}
 
 }
