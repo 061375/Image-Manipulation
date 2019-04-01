@@ -8,7 +8,11 @@ The first sub class ReduceColors does just that.
 The first feature I added was an algorithm that finds the nearest color.
 It counts colors of surrounding pixels and uses the most common.
 
-I plan to add reduce color and dithering soon.
+Features I plan to add:
+* Grayscale
+* Smear
+* Dithering
+* More as I think of them
 
 **04/01/2019** - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40MB+ the old way.
 
