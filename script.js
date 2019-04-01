@@ -2,6 +2,10 @@
 
 export default {}
 
+/** 
+ * gets the image data, creates a canvas and addss data to a buffer, then draws data
+ * @class ImageData
+ * */
 export class ImageData {
 	/** 
 	 * add a canvas to the target
@@ -11,6 +15,7 @@ export class ImageData {
 	 * @returns {Number}
 	 * */
 	canvas($t,w,h) {
+
 		let cid = this.cids
 
 		let c = document.createElement('canvas');
@@ -48,6 +53,7 @@ export class ImageData {
 				}
 			}))
 		})
+		
 		return Promise.all(promise);
 	}
 	/** 
@@ -67,27 +73,12 @@ export class ImageData {
 		const imgd = this.ctx[i].getImageData(0,0,w,h)
 		const pix = imgd.data
 		const buffer = imgd.data.buffer
-		//console.log(buffer);
 		const sourceBuffer8     = new Uint8ClampedArray(buffer);
 		console.log(sourceBuffer8);
 		return {
 			buffer:sourceBuffer8,
 			imgdata:imgd
 		}
-		/*
-		let j, n, x = 0, y = 0, pixels = [[]]
-		// Loop over each pixel and set a transparent red.
-		for (j = 0; n = pix.length, j < n; j += 4) {
-		    pixels[y][x] = [pix[j],pix[j+1],pix[j+2],pix[j+3]];
-		    x++;
-		    if (x == w) {
-				x = 0;
-				y++;
-				pixels[y] = [];
-		    }
-		}   
-		return pixels;
-		*/
 	}
 	/**
 	 * loops all the pixels of the image and calls functions to act on the image
@@ -98,22 +89,8 @@ export class ImageData {
 	 * * */
 	loopPixels(w,h,p,funcs) {
 		let pr = new Promise((resolve, reject) => {
-			/*
-			let x, y, f
-			for (y = 0; y<h;y++) {
-				for (x = 0; x<w;x++) {
-					for(f = 0; f<funcs.length;f++){
-						if (typeof funcs[f].f === 'function') {
-							
-							funcs[f].f(p,x,y,funcs[f].params)
-						}
-					}
-				}
-			}
-			*/
 			let i = 0, j = 0, len = 0, x = 0, y = 0, f
 			for(i=0, j=0, len=p.buffer.length / 4; i!=len; i++, j+=4 ) {
-				//console.log(p.buffer[j],p.buffer[j+1],p.buffer[j+2],p.buffer[j+3]);
 				for(f = 0; f<funcs.length;f++){
 					if (typeof funcs[f].f === 'function') {
 						
@@ -125,28 +102,45 @@ export class ImageData {
 					y++
 					x=0
 				}
-				//console.log(x,y);
 			}
 			resolve(p)
 		})
 		return pr
 	}
+	/** 
+	 * @param {Object}
+	 * @param {Number}
+	 * */
 	drawBuffer(p,i) {
-		console.log(p);
 		this.ctx[i].putImageData(p.imgdata, 0, 0);
 	}
+	/** 
+	 * @return {Number}
+	 * */
 	get _ctx() {
 		return this.ctx
 	}
 } 
-
+/** 
+ * @class ReduceColors
+ * @extends ImageData
+ * */
 export class ReduceColors extends ImageData {
 	constructor() {
 		super()
 		this.cids = 0
 		this.ctx = []
 	}
+	/** 
+	 * @param {Object}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Object} parameters
+	 * @param {Object} reference the calling class
+	 * */
 	nearestPixel(p,w,h,j,params,$t) {
+		// @var 
 		var c = {},
 		    l = params.l,
 		    yy,
@@ -154,7 +148,9 @@ export class ReduceColors extends ImageData {
 		    xxx = 0,
 		    q,
 		    pos;
+		    // each pixel is 3 colors and opacity ... handle it here
 		    w = w * 4
+		    // loop
 		    for(yy=0;yy<l;yy++) {
 			    for(xx=0;xx<(l*2);xx+=4) {
 			    	pos = j + (w*yy) + xx
@@ -193,6 +189,9 @@ export class ReduceColors extends ImageData {
 			p.buffer[j+2] = max.c[2]
 	}
 }
+/** 
+ * @class Colors
+ * */
 export class Colors {
 	/**
 	 * returns a color hex value from an integer
@@ -231,5 +230,4 @@ export class Colors {
 			return c
 		}
 	}
-
 }
