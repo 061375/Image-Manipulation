@@ -19,14 +19,17 @@
 			const H = 400
 			const N = 10 // nearest color threashold
 			
+			// call the sub class
 			let test = new classes.ReduceColors()
+			// create and reference some canvases
 			let i = test.canvas(document.getElementById("original"),W,H)
 			let j = test.canvas(document.getElementById("target"),W,H)
+
+
 			test.load(['images/cat.jpg'])
 			.then(function(e){
-				test.draw(i,e[0].img,W,H)
-				let pixels = test.getData(i,W,H)
-				test.loopPixels(W,H,pixels,[{
+				test.draw(i,e[0].img)
+				test.loopPixels(test.getData(i),[{
 					f:test.nearestPixel,
 					params:{
 						i:j,

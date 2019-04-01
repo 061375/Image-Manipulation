@@ -29,6 +29,9 @@ export class ImageData {
 
 		this.ctx.push(c.getContext("2d"))
 
+		this.width = w 
+		this.height = h
+
 		return cid;
 	}
 	/**  
@@ -53,7 +56,7 @@ export class ImageData {
 				}
 			}))
 		})
-		
+
 		return Promise.all(promise);
 	}
 	/** 
@@ -63,42 +66,41 @@ export class ImageData {
 	 * @param {Number} width
 	 * @param {Number} height
 	 * */
-	draw(i,img,w = null,h = null) {
-		this.ctx[i].drawImage(img, 0, 0, w, h)
+	draw(i,img) {
+		this.ctx[i].drawImage(img, 0, 0, this.width, this.height)
 	}
 	/** 
 	 * @param {Number}
 	 * */
-	getData(i,w,h) {
-		const imgd = this.ctx[i].getImageData(0,0,w,h)
+	getData(i) {
+		const imgd = this.ctx[i].getImageData(0,0,this.width, this.height)
 		const pix = imgd.data
 		const buffer = imgd.data.buffer
 		const sourceBuffer8     = new Uint8ClampedArray(buffer);
-		console.log(sourceBuffer8);
 		return {
 			buffer:sourceBuffer8,
 			imgdata:imgd
 		}
 	}
 	/**
-	 * loops all the pixels of the image and calls functions to act on the image
+	 * loops all the pixels of the image and calls functions to act on the pixel
 	 * @param {Number}
 	 * @param {Number}
 	 * @param {Array}
 	 * @param {Object}
 	 * * */
-	loopPixels(w,h,p,funcs) {
+	loopPixels(p,funcs) {
 		let pr = new Promise((resolve, reject) => {
 			let i = 0, j = 0, len = 0, x = 0, y = 0, f
 			for(i=0, j=0, len=p.buffer.length / 4; i!=len; i++, j+=4 ) {
 				for(f = 0; f<funcs.length;f++){
 					if (typeof funcs[f].f === 'function') {
 						
-						funcs[f].f(p,w,h,j,funcs[f].params,this)
+						funcs[f].f(p,this.width, this.height,j,funcs[f].params,this)
 					}
 				}
 				x++
-				if(x>=w) {
+				if(x>=this.width) {
 					y++
 					x=0
 				}
