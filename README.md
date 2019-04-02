@@ -15,7 +15,34 @@ Features I plan to add:
 
 It's possible to chain effects together however, not in the normal manner.
 
-**Ideally it should be like:** ``` test.load('image.jpg').effect({params}).anotherEffect({params}).drawBuffer() ```
+**Ideally it should be something like:** 
+
+``` test.load('image.jpg').effect({params}).anotherEffect({params}).drawBuffer() ```
+
+But currently it's more clunky:
+
+```
+test.load(['images/cat.jpg'])
+			.then(function(e){
+				test.draw(i,e[0].img)
+				test.loopPixels(test.getData(i),[{
+					f:test.nearestPixel,
+					params:{
+						i:j,
+						l:N,
+						ctx:test._ctx
+					}
+				},{
+					f:test.reduceColor,
+					params:{
+						f:4
+					}
+				}]).then(function(p) {
+					test.drawBuffer(p,j)
+				})
+				
+			})
+```
 
 **04/01/2019** - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40MB+ the old way.
 
