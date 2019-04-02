@@ -17,11 +17,13 @@ It's possible to chain effects together however, not in the normal manner.
 
 **Ideally it should be something like:** 
 
-``` test.load('image.jpg').effect({params}).anotherEffect({params}).drawBuffer() ```
+```javascript 
+test.load('image.jpg').effect({params}).anotherEffect({params}).drawBuffer() 
+```
 
 But currently it's more clunky:
 
-```
+```javascript
 test.load(['images/cat.jpg'])
 			.then(function(e){
 				test.draw(i,e[0].img)
