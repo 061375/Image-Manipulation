@@ -63,5 +63,9 @@ test.load(['images/cat.jpg'])
 
 ![alt text](https://raw.githubusercontent.com/061375/Image-Manipulation/master/images/cat-grayscale.jpg "Grey Scale")
 
+![alt text](https://raw.githubusercontent.com/061375/Image-Manipulation/master/images/fs-dithering.png "Floyd-Steinberg Dithering")
+
+![alt text](https://raw.githubusercontent.com/061375/Image-Manipulation/master/images/fs-dithering-w-greyscale.png "Floyd-Steinberg Dithering")
+
 
 
