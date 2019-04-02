@@ -8,9 +8,17 @@ The first sub class ReduceColors does just that.
 The first feature I added was an algorithm that finds the nearest color.
 It counts colors of surrounding pixels and uses the most common.
 
+Features:
+* Nearest Pixel - Makes a sort of brush blot effect ( might adapt this to brush stroke )
+* Grey Scale
+* Color Reduction
+* Floyd-Steinberg Dithering
+
 Features I plan to add:
 * Smear
-* Dithering
+* Swirl
+* Pinch and Punch
+* Directional Texturing
 * More as I think of them
 
 It's possible to chain effects together however, not in the normal manner.
@@ -45,6 +53,7 @@ test.load(['images/cat.jpg'])
 				
 			})
 ```
+**04/02/2019** - Added Floyd-Steinberg Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
 
 **04/01/2019** - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40MB+ the old way.
 
