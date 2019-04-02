@@ -30,9 +30,16 @@
 			.then(function(e){
 				test.draw(i,e[0].img)
 				test.loopPixels(test.getData(i),[{
+					f:test.nearestPixel,
+					params:{
+						i:j,
+						l:N,
+						ctx:test._ctx
+					}
+				},{
 					f:test.reduceColor,
 					params:{
-						f:4
+						f:10
 					}
 				}]).then(function(p) {
 					test.drawBuffer(p,j)

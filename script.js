@@ -191,6 +191,50 @@ export class ReduceColors extends ImageData {
 			p.buffer[j+2] = max.c[2]
 	}
 	/** 
+	 * Floyd-Steinberg Dithering
+	 * @param {Object}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Object} parameters
+	 * @param {Object} reference the calling class
+	 * */
+	FSDither(p,w,h,j,params,$t) {
+		// each pixel is 3 colors and opacity ... handle it here
+		    w = w * 4
+		let oldp = p.buffer[j] + p.buffer[j+1] + p.buffer[j+2]
+		let newp = (Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))) * 3;
+		let qerror = oldp - newp
+
+		// r
+		if(undefined !== p.buffer[j+4])
+			p.buffer[j+4] += qerror   * 7 / 16 
+		if(undefined !== p.buffer[p.buffer[j-4+w]])
+			p.buffer[j-4+w] += qerror * 3 / 16 
+		if(undefined !== p.buffer[j+w])
+			p.buffer[j+w] += qerror   * 5 / 16 
+		if(undefined !== p.buffer[j+4+w])
+			p.buffer[j+4+w] += qerror * 1 / 16
+		// g
+		if(undefined !== p.buffer[j+1+4])
+			p.buffer[j+1+4] += qerror   * 7 / 16 
+		if(undefined !== p.buffer[p.buffer[j-4+1+w]])
+			p.buffer[j-4+1+w] += qerror * 3 / 16 
+		if(undefined !== p.buffer[j+w])
+			p.buffer[j+1+w] += qerror   * 5 / 16 
+		if(undefined !== p.buffer[j+4+1+w])
+			p.buffer[j+4+1+w] += qerror * 1 / 16
+		// b
+		if(undefined !== p.buffer[j+2+4])
+			p.buffer[j+2+4] += qerror   * 7 / 16 
+		if(undefined !== p.buffer[p.buffer[j-4+2+w]])
+			p.buffer[j-4+2+w] += qerror * 3 / 16 
+		if(undefined !== p.buffer[j+2+w])
+			p.buffer[j+2+w] += qerror   * 5 / 16 
+		if(undefined !== p.buffer[j+4+2+w])
+			p.buffer[j+4+2+w] += qerror * 1 / 16
+	}
+	/** 
 	 * @param {Object}
 	 * @param {Number}
 	 * @param {Number}
