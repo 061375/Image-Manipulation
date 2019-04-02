@@ -15,9 +15,9 @@
 			
 			import * as classes from '/script.js'
 
-			const W = 300
-			const H = 400
-			const N = 10 // nearest color threashold
+			const W = 500
+			const H = 700
+			const N = 15 // nearest color threashold
 			
 			// call the sub class
 			let test = new classes.ReduceColors()
@@ -30,11 +30,9 @@
 			.then(function(e){
 				test.draw(i,e[0].img)
 				test.loopPixels(test.getData(i),[{
-					f:test.nearestPixel,
+					f:test.reduceColor,
 					params:{
-						i:j,
-						l:N,
-						ctx:test._ctx
+						f:4
 					}
 				}]).then(function(p) {
 					test.drawBuffer(p,j)

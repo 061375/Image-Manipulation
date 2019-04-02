@@ -190,6 +190,32 @@ export class ReduceColors extends ImageData {
 			p.buffer[j+1] = max.c[1]
 			p.buffer[j+2] = max.c[2]
 	}
+	/** 
+	 * @param {Object}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Object} parameters
+	 * @param {Object} reference the calling class
+	 * */
+	grayScale(p,w,h,j,params,$t) {
+		p.buffer[j] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
+		p.buffer[j+1] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
+		p.buffer[j+2] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))		
+	}
+	/** 
+	 * @param {Object}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Object} parameters
+	 * @param {Object} reference the calling class
+	 * */
+	reduceColor(p,w,h,j,params,$t) {
+		p.buffer[j] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
+		p.buffer[j+1] = Math.floor(Math.round(params.f * p.buffer[j+1] / 255) * (255/params.f))
+		p.buffer[j+2] = Math.floor(Math.round(params.f * p.buffer[j+2] / 255) * (255/params.f))		
+	}
 }
 /** 
  * @class Colors
