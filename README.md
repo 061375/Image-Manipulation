@@ -15,6 +15,8 @@ Features:
 * Floyd-Steinberg Dithering
 
 Features I plan to add:
+* Blur
+* Gaussian Blur
 * Smear
 * Swirl
 * Pinch and Punch
