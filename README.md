@@ -13,6 +13,10 @@ Features I plan to add:
 * Dithering
 * More as I think of them
 
+It's possible to chain effects together however, not in the normal manner.
+
+**Ideally it should be like:** ``` test.load('image.jpg').effect({params}).anotherEffect({params}).drawBuffer() ```
+
 **04/01/2019** - Optimized the render process by utilizing the output buffer once operations were complete instead of updating the current pixel in each part of the loop. This is much faster and only uses about 10MB versus 40MB+ the old way.
 
 **04/01/2019** - Added Grey Scale and reduce color effects
