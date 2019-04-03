@@ -77,10 +77,8 @@ export class ImageData {
 		const pix = imgd.data
 		const buffer = imgd.data.buffer
 		const sourceBuffer8     = new Uint8ClampedArray(buffer);
-		return {
-			buffer:sourceBuffer8,
-			imgdata:imgd
-		}
+		this.buffer = sourceBuffer8
+		this.imgdata = imgd
 	}
 	/**
 	 * loops all the pixels of the image and calls functions to act on the pixel
@@ -89,15 +87,12 @@ export class ImageData {
 	 * @param {Array}
 	 * @param {Object}
 	 * * */
-	loopPixels(p,funcs) {
+	loopPixels(p,params) {
 		let pr = new Promise((resolve, reject) => {
 			let i = 0, j = 0, len = 0, x = 0, y = 0, f
 			for(i=0, j=0, len=p.buffer.length / 4; i!=len; i++, j+=4 ) {
-				for(f = 0; f<funcs.length;f++){
-					if (typeof funcs[f].f === 'function') {
-						
-						funcs[f].f(p,this.width, this.height,j,funcs[f].params,this)
-					}
+				if (typeof params.func === 'function') {
+					params.func(p,this.width, this.height,j,params)
 				}
 				x++
 				if(x>=this.width) {
@@ -114,13 +109,19 @@ export class ImageData {
 	 * @param {Number}
 	 * */
 	drawBuffer(p,i) {
-		this.ctx[i].putImageData(p.imgdata, 0, 0);
+		this.ctx[i].putImageData(p, 0, 0);
 	}
 	/** 
 	 * @return {Number}
 	 * */
 	get _ctx() {
 		return this.ctx
+	}
+	get _buffer() {
+		return this.buffer
+	}
+	get _imgdata() {
+		return this.imgdata
 	}
 } 
 /** 
@@ -132,6 +133,35 @@ export class ReduceColors extends ImageData {
 		super()
 		this.cids = 0
 		this.ctx = []
+		this.buffer = null
+		this.imgdata = null
+	}
+	/** 
+	 * 
+	 * */
+	nearestPixel(params) {
+		params.func = this.p_nearestPixel
+		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
+		.then(()=>{})
+		return this 
+	}
+	grayScale(params) {
+		params.func = this.p_grayScale
+		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
+		.then(()=>{})
+		return this 
+	}
+	FSDither(params) {
+		params.func = this.p_FSDither
+		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
+		.then(()=>{})
+		return this 
+	}
+	reduceColor(params) {
+		params.func = this.p_reduceColor
+		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
+		.then(()=>{})
+		return this 
 	}
 	/** 
 	 * @param {Object}
@@ -141,7 +171,7 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} parameters
 	 * @param {Object} reference the calling class
 	 * */
-	nearestPixel(p,w,h,j,params,$t) {
+	p_nearestPixel(p,w,h,j,params) {
 		// @var 
 		var c = {},
 		    l = params.l,
@@ -199,7 +229,7 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} parameters
 	 * @param {Object} reference the calling class
 	 * */
-	FSDither(p,w,h,j,params,$t) {
+	p_FSDither(p,w,h,j,params) {
 		// each pixel is 3 colors and opacity ... handle it here
 		    w = w * 4
 		let oldp = p.buffer[j] + p.buffer[j+1] + p.buffer[j+2]
@@ -242,7 +272,7 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} parameters
 	 * @param {Object} reference the calling class
 	 * */
-	grayScale(p,w,h,j,params,$t) {
+	p_grayScale(p,w,h,j,params) {
 		p.buffer[j] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
 		p.buffer[j+1] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
 		p.buffer[j+2] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))		
@@ -255,7 +285,7 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} parameters
 	 * @param {Object} reference the calling class
 	 * */
-	reduceColor(p,w,h,j,params,$t) {
+	p_reduceColor(p,w,h,j,params) {
 		p.buffer[j] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
 		p.buffer[j+1] = Math.floor(Math.round(params.f * p.buffer[j+1] / 255) * (255/params.f))
 		p.buffer[j+2] = Math.floor(Math.round(params.f * p.buffer[j+2] / 255) * (255/params.f))		

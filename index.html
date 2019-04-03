@@ -29,22 +29,16 @@
 			test.load(['images/cat.jpg'])
 			.then(function(e){
 				test.draw(i,e[0].img)
-				test.loopPixels(test.getData(i),[{
-					f:test.nearestPixel,
-					params:{
+				test.getData(i)
+				test.nearestPixel({
 						i:j,
 						l:N,
 						ctx:test._ctx
-					}
-				},{
-					f:test.reduceColor,
-					params:{
-						f:10
-					}
-				}]).then(function(p) {
-					test.drawBuffer(p,j)
 				})
-				
+				.grayScale({
+					f:10
+				})
+				.drawBuffer(test._imgdata,j)
 			})
 			
 		</script>
