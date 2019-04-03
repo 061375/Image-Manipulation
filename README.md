@@ -29,14 +29,14 @@ As of version 1.2.8 It's possible to chain effects together
 
 ```javascript
 test.load(['images/cat.jpg'])
-.then(function(images){
-	test.draw(i,images[0].img)
-	test.getData(i)
-	test.nearestPixel(i,N)
-	.grayScale(3)
-	.FSDither(10)
-	.drawBuffer(j)
-})
+	.then(function(images){
+		test.draw(i,images[0].img)
+			.getData(i)
+			.nearestPixel(i,N)
+			.grayScale(3)
+			.FSDither(10)
+			.drawBuffer(j)
+	})
 ```
 **04/03/2019** - remove need to call context in drawBuffer
 

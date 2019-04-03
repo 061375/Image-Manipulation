@@ -68,6 +68,7 @@ export class ImageData {
 	 * */
 	draw(i,img) {
 		this.ctx[i].drawImage(img, 0, 0, this.width, this.height)
+		return this
 	}
 	/** 
 	 * @param {Number}
@@ -79,6 +80,7 @@ export class ImageData {
 		const sourceBuffer8     = new Uint8ClampedArray(buffer);
 		this.buffer = sourceBuffer8
 		this.imgdata = imgd
+		return this
 	}
 	/**
 	 * loops all the pixels of the image and calls functions to act on the pixel
