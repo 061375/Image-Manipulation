@@ -108,8 +108,8 @@ export class ImageData {
 	 * @param {Object}
 	 * @param {Number}
 	 * */
-	drawBuffer(p,i) {
-		this.ctx[i].putImageData(p, 0, 0);
+	drawBuffer(i) {
+		this.ctx[i].putImageData(this._imgdata, 0, 0);
 	}
 	/** 
 	 * @return {Number}
