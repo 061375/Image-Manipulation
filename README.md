@@ -1,7 +1,7 @@
 # Image-Manipulation
 Using Javascript to manipulate images
 
-### Version 1.2.8
+### Version 2.0.0
 
 This program has a base class to import images and get data.
 
