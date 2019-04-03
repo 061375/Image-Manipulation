@@ -32,10 +32,10 @@ test.load(['images/cat.jpg'])
 	.then(function(images){
 		test.draw(i,images[0].img)
 			.getData(i)
-			.nearestPixel(i,15)
-			.grayScale(3)
-			.FSDither(10)
-			.drawBuffer(j)
+				.nearestPixel(i,15)
+				.grayScale(3)
+				.FSDither(10)
+					.drawBuffer(j)
 	})
 ```
 **04/03/2019** - remove need to call context in drawBuffer
