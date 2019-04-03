@@ -143,6 +143,7 @@ export class ReduceColors extends ImageData {
 	 * */
 	nearestPixel(params) {
 		params.func = this.p_nearestPixel
+		params.ctx = this._ctx
 		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
 		.then(()=>{})
 		return this 
