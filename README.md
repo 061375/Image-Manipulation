@@ -29,8 +29,8 @@ As of version 1.2.8 It's possible to chain effects together
 
 ```javascript
 test.load(['images/cat.jpg'])
-.then(function(e){
-	test.draw(i,e[0].img)
+.then(function(images){
+	test.draw(i,images[0].img)
 	test.getData(i)
 	test.nearestPixel({
 			i:j,
