@@ -34,8 +34,7 @@ test.load(['images/cat.jpg'])
 	test.getData(i)
 	test.nearestPixel({
 			i:j,
-			l:N,
-			ctx:test._ctx
+			l:N
 	})
 	.grayScale({
 		f:10
@@ -43,6 +42,8 @@ test.load(['images/cat.jpg'])
 	.drawBuffer(test._imgdata,j)
 })
 ```
+**04/03/2019** - remove need to include context when calling nearestPixel
+
 **04/03/2019** - Added Method Chaining or Factory Functions
 
 **04/02/2019** - Added Floyd-Steinberg Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
