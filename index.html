@@ -17,10 +17,10 @@
 
 			const W = 500
 			const H = 700
-			const N = 15 // nearest color threashold
 			
 			// call the sub class
 			let test = new classes.ReduceColors()
+
 			// create and reference some canvases
 			let i = test.canvas(document.getElementById("original"),W,H)
 			let j = test.canvas(document.getElementById("target"),W,H)
@@ -30,7 +30,7 @@
 				.then(function(images){
 					test.draw(i,images[0].img)
 						.getData(i)
-						.nearestPixel(i,N)
+						.nearestPixel(i,15)
 						.grayScale(3)
 						.FSDither(10)
 						.drawBuffer(j)

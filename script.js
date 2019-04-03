@@ -140,7 +140,8 @@ export class ReduceColors extends ImageData {
 	}
 	// ----- Wrappers for private methods that need to be looped using loopPixels in the base class
 	/** 
-	 * @param {Object} params
+	 * @param {Number} a canvas context index
+	 * @param {Number} b nearest pixel range ( size )
 	 * @returns {Object}
 	 * */
 	nearestPixel(a,b) {
@@ -154,7 +155,7 @@ export class ReduceColors extends ImageData {
 		return this 
 	}
 	/** 
-	 * @param {Object} params
+	 * @param {Number} a strength
 	 * @returns {Object}
 	 * */
 	grayScale(a) {
@@ -166,7 +167,7 @@ export class ReduceColors extends ImageData {
 		return this 
 	}
 	/** 
-	 * @param {Object} params
+	 * @param {Number} a strength
 	 * @returns {Object}
 	 * */
 	FSDither(a) {
@@ -178,7 +179,7 @@ export class ReduceColors extends ImageData {
 		return this 
 	}
 	/** 
-	 * @param {Object} params
+	 * @param {Number} a strength
 	 * @returns {Object}
 	 * */
 	reduceColor(params) {
@@ -187,7 +188,9 @@ export class ReduceColors extends ImageData {
 		.then(()=>{})
 		return this 
 	}
+
 	// ----- PRIVATE
+	
 	/** 
 	 * @param {Object}
 	 * @param {Number}
