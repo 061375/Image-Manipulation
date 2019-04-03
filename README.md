@@ -39,9 +39,11 @@ test.load(['images/cat.jpg'])
 	.grayScale({
 		f:10
 	})
-	.drawBuffer(test._imgdata,j)
+	.drawBuffer(j)
 })
 ```
+**04/03/2019** - remove need to call context in drawBuffer
+
 **04/03/2019** - remove need to include context when calling nearestPixel
 
 **04/03/2019** - Added Method Chaining or Factory Functions
