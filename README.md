@@ -5,6 +5,8 @@ Using Javascript to manipulate images
 
 This program has a base class to import images and get data.
 
+#### Note: This uses import and threfore needs to be run in a server environment or you will get a CORS error
+
 The first sub class ReduceColors does just that.
 
 The first feature I added was an algorithm that finds the nearest color.
