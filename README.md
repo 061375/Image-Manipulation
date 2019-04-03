@@ -40,6 +40,8 @@ test.load(['images/cat.jpg'])
 					.drawBuffer(j)
 	})
 ```
+**04/03/2019** - Spread code out over multiple files
+
 **04/03/2019** - remove need to call context in drawBuffer
 
 **04/03/2019** - remove need to include context when calling nearestPixel
