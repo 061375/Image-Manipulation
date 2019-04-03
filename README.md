@@ -32,8 +32,9 @@ test.load(['images/cat.jpg'])
 .then(function(images){
 	test.draw(i,images[0].img)
 	test.getData(i)
-	test.nearestPixel({i:j,l:N})
-	.grayScale({f:10})
+	test.nearestPixel(i,N)
+	.grayScale(3)
+	.FSDither(10)
 	.drawBuffer(j)
 })
 ```

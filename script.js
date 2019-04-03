@@ -141,9 +141,12 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} params
 	 * @returns {Object}
 	 * */
-	nearestPixel(params) {
+	nearestPixel(a,b) {
+		let params = {}
 		params.func = this.p_nearestPixel
 		params.ctx = this._ctx
+		params.i = a 
+		params.l = b
 		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
 		.then(()=>{})
 		return this 
@@ -152,8 +155,10 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} params
 	 * @returns {Object}
 	 * */
-	grayScale(params) {
+	grayScale(a) {
+		let params = {}
 		params.func = this.p_grayScale
+		params.f = a
 		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
 		.then(()=>{})
 		return this 
@@ -162,8 +167,10 @@ export class ReduceColors extends ImageData {
 	 * @param {Object} params
 	 * @returns {Object}
 	 * */
-	FSDither(params) {
+	FSDither(a) {
+		let params = {}
 		params.func = this.p_FSDither
+		params.f = a
 		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
 		.then(()=>{})
 		return this 
