@@ -5,10 +5,10 @@ import * as imagedata from '/js/imagedata.js'
 export default {}
 
 /** 
- * @class Geometry
- * @extends Geometry
+ * @class Trigonometry
+ * @extends Trigonometry
  * */
-export class Geometry extends ImageData {
+export class Trigonometry extends ImageData {
 	constructor() {
 		super()
 		this.cids = 0
@@ -31,8 +31,8 @@ export class Geometry extends ImageData {
 		let temp = this.buffer
 		for(let j=0;j<r;j++) {
 			for(let i=0; i<360;i++) {
-				let xy = General.trig(x,y,j,i)
-				let xy2 = General.trig(x,y,j+s,i)
+				let xy = this.trig(x,y,j,i)
+				let xy2 = this.trig(x,y,j+s,i)
 				let p = (xy[0] + xy[1]) * w - 1
 				// get current pixel
 				let tR = this.buffer[p]
@@ -47,5 +47,36 @@ export class Geometry extends ImageData {
 		}
 		this.buffer = temp
 		return this
+	}
+	/** 
+	 * 
+	 * @function trig
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Number}
+	 * @param {Boolean}
+	 * @returns {Mixed} 
+	 * */
+	static trig(x,y,r,d,array=true) {
+
+		if(d<0)d+=360;
+		if(d>360)d-=360;
+
+		let a = d * Math.PI / 180;
+		let xpos = r * Math.cos(a);
+		let ypos = r * Math.sin(a);
+
+	    if(array) {
+	    	return [
+	    		~~xpos+x,
+	    		~~ypos+y
+	    	]
+	    }else{
+	    	return {
+	    		x:~~xpos+x,
+	    		y:~~ypos+y
+	    	}
+	    }
 	}
 }

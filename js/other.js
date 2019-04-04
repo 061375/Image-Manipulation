@@ -48,35 +48,5 @@ export class Colors {
  * @class General
  * */
 export class General {
-	/** 
-	 * 
-	 * @function trig
-	 * @param {Number}
-	 * @param {Number}
-	 * @param {Number}
-	 * @param {Number}
-	 * @param {Boolean}
-	 * @returns {Mixed} 
-	 * */
-	static trig(x,y,r,d,array=true) {
-
-		if(d<0)d+=360;
-		if(d>360)d-=360;
-
-		let a = d * Math.PI / 180;
-		let xpos = r * Math.cos(a);
-		let ypos = r * Math.sin(a);
-
-	    if(array) {
-	    	return [
-	    		~~xpos+x,
-	    		~~ypos+y
-	    	]
-	    }else{
-	    	return {
-	    		x:~~xpos+x,
-	    		y:~~ypos+y
-	    	}
-	    }
-	}
+	
 }
