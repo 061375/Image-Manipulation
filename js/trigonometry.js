@@ -8,7 +8,7 @@ export default {}
  * @class Trigonometry
  * @extends Trigonometry
  * */
-export class Trigonometry extends ImageData {
+export class Trigonometry extends imagedata.ImageData {
 	constructor() {
 		super()
 		this.cids = 0
