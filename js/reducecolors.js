@@ -36,9 +36,9 @@ export class ReduceColors extends imagedata.ImageData {
 	 * @param {Number} a strength
 	 * @returns {Object}
 	 * */
-	grayScale(a) {
+	greyScale(a) {
 		let params = {}
-		params.func = this.p_grayScale
+		params.func = this.p_greyScale
 		params.f = a
 		this.loopPixels({buffer:this.buffer,imgdata:this.imgdata},params)
 		.then(()=>{})
@@ -197,7 +197,7 @@ export class ReduceColors extends imagedata.ImageData {
 	 * @param {Object} parameters
 	 * @param {Object} reference the calling class
 	 * */
-	p_grayScale(p,w,h,j,params) {
+	p_greyScale(p,w,h,j,params) {
 		p.buffer[j] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
 		p.buffer[j+1] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))
 		p.buffer[j+2] = Math.floor(Math.round(params.f * p.buffer[j] / 255) * (255/params.f))		
