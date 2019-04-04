@@ -16,7 +16,7 @@ export class Blur extends ImageData {
 		this.buffer = null
 		this.imgdata = null
 	}
-	blur() {
+	box() {
 
 	}
 	gaussian(x,y) {
