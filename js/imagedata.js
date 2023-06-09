@@ -1,6 +1,6 @@
 'use strict';
 
-import * as other from '/js/other.js'
+import * as other from '../js/other.js'
 
 export default {}
 

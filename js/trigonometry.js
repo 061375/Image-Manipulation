@@ -1,6 +1,6 @@
 'use strict';
 
-import * as imagedata from '/js/imagedata.js'
+import * as imagedata from '../js/imagedata.js'
 
 export default {}
 

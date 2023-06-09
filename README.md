@@ -1,7 +1,7 @@
 # Image-Manipulation
 Using Javascript to manipulate images
 
-### Version 2.0.0
+### Version 2.0.1
 
 This program has a base class to import images and get data.
 
@@ -40,6 +40,8 @@ test.load(['images/cat.jpg'])
 					.drawBuffer(j)
 	})
 ```
+**06/08/2023** - Paths weren't correct for nested folder 
+
 **04/03/2019** - Spread code out over multiple files
 
 **04/03/2019** - remove need to call context in drawBuffer
