@@ -1,41 +1,20 @@
 <html>
 	<head>
-		<style>
-			div {
-				float: left;
-			}
-		</style>
+		<meta charset="utf-8">
+		<title>Image Manipulation Examples</title>
+		<link rel="stylesheet" href="style.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-		<div id="original"></div>
-		<div id="target"></div>
-		<script type="module">
-			
-			'use strict';
-			
-			import * as reducecolors from './js/reducecolors.js'
-
-			const W = 500
-			const H = 700
-			
-			// call the sub class
-			let test = new reducecolors.ReduceColors()
-
-			// create and reference some canvases
-			let i = test.canvas(document.getElementById("original"),W,H)
-			let j = test.canvas(document.getElementById("target"),W,H)
-
-
-			test.load(['images/cat.jpg'])
-				.then(function(images){
-					test.draw(i,images[0].img)
-						.getData(i)
-							//.nearestPixel(i,15)
-							.greyScale(3)
-							.FSDither(10)
-								.drawBuffer(j)
-				})
-			
-		</script>
+		<div class="container">
+			<ul>
+				<li><a href="fsdither.html">Floyd-Steinberg Dithering</a></li>
+				<li><a href="ascii.html">ASCII Art</a></li>
+				<li><a href="reduced.html">Color Reduction</a></li>
+				<li><a href="nearest.html">Pixel Reduction</a></li>
+				<li><a href="multiple.html">Multiple Filters</a></li>
+			</ul>	
+		</div>
+	
 	</body>
 </html>

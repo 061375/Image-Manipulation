@@ -1,6 +1,6 @@
 'use strict';
-import { ImageData } from '../js/imagedata.js';
-import { Public } from '../js/_config.js';
+import {ImageData} from '../js/imagedata.js'
+import {Public} from '../js/_config.js'
 export default {};
 /**
  * @class Trigonometry
@@ -18,7 +18,7 @@ export class Trigonometry extends ImageData {
      * @param {Number} x center of spin x
      * @param {Number} y center of spin y
      * */
-    spiral(s, r, w, h, x = null, y = null) {
+    spiral(s:number, r:number, w:number, h:number, x = null, y = null) {
         x = (x == null ? w / 2 : x);
         y = (y == null ? h / 2 : y);
         w = w * 4;
@@ -42,15 +42,15 @@ export class Trigonometry extends ImageData {
         return this;
     }
     /**
-     *
-     * @param x
-     * @param y
-     * @param r
-     * @param d
-     * @param array
-     * @returns
-     */
-    static trig(x, y, r, d, array = true) {
+	 * 
+	 * @param x 
+	 * @param y 
+	 * @param r 
+	 * @param d 
+	 * @param array 
+	 * @returns 
+	 */
+    static trig(x:number, y:number, r:number, d:number, array:boolean = true): number[] | { x: number; y: number; } {
         if (d < 0)
             d += 360;
         if (d > 360)
@@ -72,4 +72,3 @@ export class Trigonometry extends ImageData {
         }
     }
 }
-//# sourceMappingURL=trigonometry.js.map

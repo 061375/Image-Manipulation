@@ -1,0 +1,58 @@
+<html>
+	<head>
+        <title>ASCII Art Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+	</head>
+<body>
+	<div id="data">
+		<div class="flex">
+			<div id="original" class="c1"></div>
+			<div id="target" class="c1"></div>
+			<div id="font" class="c1"></div>
+		</div>
+		<div class="flex">
+			<div class="c1"></div>
+			<div class="c1" id="result"></div>
+			<div class="c1"></div>
+		</div>
+	</div>
+	<script type="module">
+
+		'use strict';
+
+		import * as Base from './js/_base.js'
+		import { Public } from './js/_config.js'
+		import { Helpers } from './js/_helpers.js'
+		const W = 120
+		const H = 120
+
+		Helpers.start(); // ( optional ) start the clock if you want to record runtime
+		
+		// call the Base class
+		let test = new Base.Base()
+
+		// create and reference some canvases
+		let i = test.canvas(document.getElementById("original"), W, H)
+        // add a canvas to draw fonts to
+        // this will loop the pixels of the font to give each glyph a weight base don the number of visible pixels
+		let f = test.canvas(document.getElementById("font"), 150, 150, 
+            { willReadFrequently: true } // (optional) tells the canvas that it will be read frequently for better performance
+        )
+        // set an image to load
+		let img = "images/madcat.jpg";
+		test.load([img]) // load the image
+			.then(function (images) {
+				test.draw(i, images[0].img) // draw it to the #original canvas
+					.getData(i)
+						.setFontNegative() // reverse the font weight direction
+						.fontNearestPixel(i, f, 1, "Wide Latin", 10) // set the font to use and the size and the surrounding pixels of the image to get the average color depth
+							.now() // ( optional ) draw a timestamp to the console
+								.drawTable(W, H, '#target') // draw the table to hold the ascii pixels
+								.drawFontPixels() // draw the pixels to the table
+									.done('#result', "Finished!!!!") // ( optional )  
+			})
+	</script>
+	</body>
+</html>
